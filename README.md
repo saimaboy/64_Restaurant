@@ -1,6 +1,3 @@
-Here’s a comprehensive structure for the README file for a **64 Restaurant Project**. It will include all necessary instructions and details for the project to ensure ease of use and understanding for developers, contributors, and users.
-
----
 
 # 64 Restaurant Project
 
