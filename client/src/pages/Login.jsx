@@ -6,11 +6,28 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // Mock authentication
-    localStorage.setItem("authToken", "sampleToken");
-    navigate("/"); // Redirect to home after login
+    try {
+      const response = await fetch("http://localhost:5000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      navigate("/");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -52,7 +69,10 @@ const Login = () => {
           </button>
         </form>
         <p className="mt-4 text-sm text-center">
-          Don't have an account? <a href="/signup" className="text-yellow-500 hover:underline">Sign Up</a>
+          Don't have an account?{" "}
+          <a href="/signup" className="text-yellow-500 hover:underline">
+            Sign Up
+          </a>
         </p>
       </div>
     </div>

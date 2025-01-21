@@ -15,7 +15,7 @@ const About = () => {
             {/* Story Section */}
             <div>
               <img
-                src="/images/restaurant-story.jpg"
+                src="https://cdn.prod.website-files.com/6254ae25c3e3a2cdc526ebaf/665a1231127bcf36eec7ed73_restaurant-employee-training-roles-header.jpg"
                 alt="Our Story"
                 className="rounded-lg shadow-lg w-full h-64 object-cover"
               />

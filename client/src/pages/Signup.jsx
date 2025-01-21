@@ -1,14 +1,33 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    console.log("Name:", name, "Email:", email, "Password:", password);
-    // Add your registration logic here
+    try {
+      const response = await fetch("http://localhost:5000/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Signup failed");
+      }
+
+      alert("Signup successful! Please login.");
+      navigate("/login");
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
@@ -63,7 +82,10 @@ const Signup = () => {
           </button>
         </form>
         <p className="mt-4 text-sm text-center">
-          Already have an account? <a href="/login" className="text-yellow-500 hover:underline">Login</a>
+          Already have an account?{" "}
+          <a href="/login" className="text-yellow-500 hover:underline">
+            Login
+          </a>
         </p>
       </div>
     </div>

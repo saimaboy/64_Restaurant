@@ -3,5 +3,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1"
-  }
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "chai-http": "^5.1.1",
+    "mocha": "^11.0.1"
+  },
+  "scripts": {
+  "test": "mocha --timeout 10000"
+}
+
 }

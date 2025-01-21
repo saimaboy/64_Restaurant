@@ -13,12 +13,13 @@ const Footer= () => {
   </div>
 <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
 
-  <div class="flex items-center space-x-4 ">
-       <a href="/" className="text-2xl font-bold pl-10 font-cursive">
+  <div class="flex space-x-4 ">
+       <a href="/" className="text-2xl pl-2 font-bold  font-cursive">
           ^_^ 64 Restaurant
         </a>
-    <p class="text-sm justify-center pl-96 pt-5">© 2025 Your Company. All rights reserved.</p>
+  
   </div>
+  <p class="text-sm justify-center pt-5">© 2025 Your Company. All rights reserved.</p>
 
  
   <div class="flex pr-10 space-x-6 mt-4 md:mt-0">
