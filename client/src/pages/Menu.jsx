@@ -3,43 +3,36 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 
 const Menu = () => {
-  const [menuItems, setMenuItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const [cart, setCart] = useState([]);
 
-  // Fetch menu items from backend
-  useEffect(() => {
-    const fetchMenuItems = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/menu');
-        if (!response.ok) {
-          throw new Error('Failed to fetch menu items');
-        }
-        const data = await response.json();
-        setMenuItems(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find((item) => item.id === product.id);
+      if (existingProduct) {
+        return prevCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
       }
-    };
-
-    fetchMenuItems();
-  }, []);
-
-  if (loading) return <div>Loading menu items...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  const handleAddToCart = (item) => {
-    const queryParams = new URLSearchParams({
-      id: item.id,
-      name: item.name,
-      price: item.price,
-      quantity: 1, // Default quantity
-    }).toString();
-    navigate(`/cart?${queryParams}`);
+    });
+    alert(`${product.name} added to cart!`);
   };
+
+  const menuItems = [
+    {
+      id: 1,
+      name: "Delicious Pizza",
+      price: 20,
+      description: "A delightful blend of flavors and toppings.",
+      image: "/images/menu-item.jpg",
+      reviews: 120,
+      rating: 4,
+    },
+    // Add more menu items here
+  ];
 
   return (
     <div className="bg-gray-50 overflow-x-hidden">

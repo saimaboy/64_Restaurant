@@ -59,4 +59,4 @@ const Promo = () => {
   );
 };
 
-export default Promo;
+export default Promo;
