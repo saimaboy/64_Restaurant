@@ -31,8 +31,8 @@ jobs:
         docker build -t saimaboy/frontend:latest .
         docker push saimaboy/frontend:latest
 
-    # - name: Deploy with docker-compose
-    #   run: |
-    #     docker-compose down
-    #     docker-compose pull
-    #     docker-compose up -d
+    - name: Deploy with docker-compose
+      run: |
+        docker-compose down
+        docker-compose pull
+        docker-compose up -d

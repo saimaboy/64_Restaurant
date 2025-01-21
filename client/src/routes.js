@@ -12,7 +12,9 @@ import ContactUs from "./pages/ContactUs";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Cart from "./pages/Cart";
-import Payment from "./pages/Payment"; // Ensure you create this component
+import Confirmationpage from "./pages/Confirmationpage";
+
+
 
 // Helper to check authentication status
 const isAuthenticated = () => {
@@ -30,33 +32,15 @@ const AppRoutes = () => {
       <Route path="/Contact" element={<ContactUs />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Signup" element={<Signup />} />
+      <Route path="/Reservations" element={<Reservations />} />
 
       {/* Cart Route */}
       <Route path="/Cart" element={<Cart />} />
+      <Route path="/Confirmationpage" element={<Confirmationpage />} />
 
-      {/* Payment Route */}
-      <Route
-        path="/Payment"
-        element={
-          isAuthenticated() ? (
-            <Payment />
-          ) : (
-            <Navigate to="/Login" replace state={{ from: "/Payment" }} />
-          )
-        }
-      />
+     
+      
 
-      {/* Protected Routes */}
-      <Route
-        path="/reservations"
-        element={
-          isAuthenticated() ? (
-            <Reservations />
-          ) : (
-            <Navigate to="/Login" replace state={{ from: "/reservations" }} />
-          )
-        }
-      />
 
       {/* Catch-all Route */}
       <Route path="*" element={<Navigate to="/" />} />

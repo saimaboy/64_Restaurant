@@ -1,9 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ContactUs = () => {
-  return (    
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message.");
+      }
+
+      const result = await response.json();
+      setSuccessMessage(result.message);
+      setFormData({ name: "", email: "", message: "" }); // Clear the form
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
     <div className="bg-gray-50 p-10 min-h-screen">
-      <section className="py-16  bg-gray-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-cursive font-bold mb-8">Contact Us</h2>
           <p className="text-gray-600 mb-12 max-w-xl mx-auto">
@@ -14,7 +50,10 @@ const ContactUs = () => {
             {/* Contact Form */}
             <div className="bg-white p-8 rounded-lg shadow-lg">
               <h3 className="text-2xl font-bold mb-4">Get in Touch</h3>
-              <form>
+              {successMessage && (
+                <p className="text-green-600 mb-4">{successMessage}</p>
+              )}
+              <form onSubmit={handleSubmit}>
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-gray-700 font-bold mb-2">
                     Name
@@ -22,6 +61,9 @@ const ContactUs = () => {
                   <input
                     type="text"
                     id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     placeholder="Your Name"
                     required
@@ -34,6 +76,9 @@ const ContactUs = () => {
                   <input
                     type="email"
                     id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     placeholder="Your Email"
                     required
@@ -45,8 +90,11 @@ const ContactUs = () => {
                   </label>
                   <textarea
                     id="message"
-                    rows="5"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                    rows="5"
                     placeholder="Your Message"
                     required
                   ></textarea>
